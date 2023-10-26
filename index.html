@@ -49,24 +49,20 @@
 </head>
 <body>
   <script>
-    const AS_URL_BASE = " https://script.google.com/macros/s/AKfycbxq4Rk-YcP98T7HGYUX2klAKDiaQDzVQiVIdvM_Tso3-vql07uVNdeBNXxQHBQh0eVp/exec";
-    
-    var url = document.location.href;
-    var k = url.substr(url.lastIndexOf("k=")+2);
-    
-    if(k){
-      fetch(AS_URL_BASE+'?k='+k)
-      .then(r => r.text())
-      .then((r) => {
-        console.log(r);
-        //document.write(r);
-        if(r){
-          document.location.replace(r);
-        }
-      })
-      .catch(err => console.log(err))
-    }
+var xhr = new XMLHttpRequest();
+xhr.open("GET", AS_URL_BASE+'?k='+k);
+xhr.send();
 
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    // Success!
+    var url = xhr.responseText;
+    document.location.replace(url);
+  } else {
+    // Error!
+    console.log(xhr.statusText);
+  }
+};
   </script>
   
   <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
